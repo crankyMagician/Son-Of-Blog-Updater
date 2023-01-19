@@ -1,0 +1,35 @@
+﻿@model SonOfBlogUpdater.Models.MetaTag
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+     <div class="card animated-card jumbotron text-center" style="background-color: #FBC40E; color: #343F71;">
+        <h4>Edit MetaTag</h4>
+    
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group mx-auto">
+                        
+                        <input asp-for="TagName" class="form-control" />
+                        <span asp-validation-for="TagName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="btn btn-secondary animated-button">Back to List</a>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

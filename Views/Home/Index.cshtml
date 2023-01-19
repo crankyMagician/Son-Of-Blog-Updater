@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    
+}
+
+
+
+<div class="container py-5">
+
+ <div class="jumbotron text-center " style="background-color: #FBC40E; color: #343F71;">
+    <h1 class="display-4" style="font-family: 'Roboto', sans-serif; font-size: 3.5rem;">Welcome to SonOfBlogUpdater!</h1>
+    <p class="lead" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">SonOfBlogUpdater is an application that allows you to easily edit and manage your blog posts, as well as create and manage meta tags for SEO optimization. </p>
+ 
+ 
+    <p style="font-family: 'Roboto', sans-serif; font-size: 1.25rem;"> With our application, you can make sure that your blog posts meet Google SEO standards, which can help to increase visibility and drive more traffic to your website. </p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg animated-button" href="@Url.Action("Index", "BlogPostEdit")" role="button" style="background-color: #F34C19;">Start editing your blog posts</a>
+    </p>
+    <p style="font-family: 'Roboto', sans-serif; font-size: 1.25rem;"> Additionally, other applications can easily read from this app to display the blog posts on their own application, making it easy to create a front-end plugin. </p>
+    <p class="lead">
+        <a class="btn btn-primary btn-lg animated-button" href="@Url.Action("SeoExplanation", "Home")" role="button" style="background-color: #F34C19;">Learn more about SEO</a>
+    </p>
+</div>
+
+</div>

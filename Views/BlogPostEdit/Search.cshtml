@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model SonOfBlogUpdater.Utils.PaginatedList<BlogPost>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+  <div class="card animated-card jumbotron text-center" style="background-color: #FBC40E; color: #343F71;">
+       <div class="col-sm-6">
+        <form asp-action="Index" method="get">
+          <div class="form-actions no-color">
+            <p>
+                 
+                        <a asp-action="Index" class="btn btn-primary">Reset Search</a>
+            </p>
+          </div>
+        </form>
+      </div>
+   </div>
+
+<table class="table table-striped custom-table  custom-table-bordered  bg-dark">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Date</th>
+            <th>Body</th>
+            
+            <th class="meta-tags">Meta Tags</th>
+            
+            <th class="actions">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>
+                        @foreach (var author in item.BlogPostAuthors)
+                        {
+                            @author.Author.Name
+                            ;
+                        }
+                        </td>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Body</td>
+                        
+                                <td>
+                        @foreach (var metaTag in item.BlogPostMetaTags)
+                        {
+                                                 <span>@metaTag.MetaTag.TagName,</span>
+                                            <span> </span>
+                        }
+                                </td>
+                      
+                         <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary custom-btn-primary">Edit</a>
+                         
+                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger custom-btn-danger">Delete</a>
+                          </td>
+                     </tr>
+            }
+        </tbody>
+    </table>
+    @*</div>*@
+
+
+
+
+
+
+</div>
+        <div class="p-3 m-3 d-flex justify-content-center">
+    @{
+        var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-pageNumber="@(Model.PageIndex > 1 ? Model.PageIndex - 1 : 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn custom-button animated-button animated-button-default n @prevDisabled">
+                        Previous
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                       asp-route-pageNumber="@(Model.PageIndex + 1 > Model.TotalPages ? Model.TotalPages : Model.PageIndex + 1)"
+
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn custom-button animated-button  animated-button-default  @nextDisabled">
+                        Next
+                    </a>
+                    <a asp-action="Create" class="btn custom-button animated-button animated-button-success">Create New</a>
+        </div>

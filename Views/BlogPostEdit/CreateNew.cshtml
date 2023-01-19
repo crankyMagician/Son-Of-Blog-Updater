@@ -1,0 +1,120 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model SonOfBlogUpdater.Models.BlogPost
+<div class="container py-5">
+    <h2 class="text-center mb-4">Create New Blog Post</h2>
+       
+
+    <form asp-controller="BlogPostEdit" asp-action="CreateNew" method="post">
+    
+        <div class="card animated-card text-white  text-center bg-secondary p-3 mb-3">
+          <div class="form-group">
+            <label asp-for="Title" class="text-center h2"></label>
+            <input asp-for="Title" class="form-control bg-light text-dark" name="Title" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+          </div>
+        </div>
+
+       <div class="card animated-card text-center m-3 p-3" style="background-color: #FBC40E;">
+            <div class="form-group">
+                <label asp-for="Body" style="color: #343F71; font-size: 1.5rem;"></label>
+                <textarea asp-for="Body" class="form-control" name="Body"></textarea>
+                <span asp-validation-for="Body" class="text-danger"></span>
+            </div>
+        </div>
+
+       <div class="card animated-card bg-light m-3 p-3">
+            <div class="form-group">
+                <label asp-for="Date" style="color: #343F71; font-size: 1.5rem;"></label>
+                <input asp-for="Date" class="form-control" type="date" name="Date"/>
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="card animated-card text-center p-2 mb-3" style="background-color: #FBC40E;">
+            <div class="form-group">
+                <label asp-for="BlogPostAuthors">Author</label>
+            @Html.DropDownListFor(
+                    model => model.BlogPostAuthors,
+                    new SelectList(ViewBag.Authors, "Id", "Name"),
+                    "Select Author",
+                     new { @class = "form-control" }
+                )
+                <span asp-validation-for="BlogPostAuthors" class="text-danger"></span>
+            </div>
+            <div class="my-4">
+                   <a asp-action="Create" asp-controller="Author" class="btn btn-primary animated-button">Create Author</a>
+            </div>
+        </div>
+         
+        <div class="form-group" id="meta-tags-container" data-toggle="tooltip" data-placement="top" title="Google's algorithm supports a maximum of 10 meta tags per page, but the relevancy and content of the tags are more important than the number of tags. Also, not all tags are relevant for all types of pages.">
+            <div class="card animated-card" style="background-color: #E9D8E4;">
+                <div class="card-body">
+                    <label class="d-flex justify-content-center" style="color: #343F71; font-size: 1.5rem;">Meta Tags</label>
+                    <div class="container-fluid">
+                        <div class="row d-flex justify-content-center">
+                            <div class="col-md-6">
+                                <div class="border rounded p-2" style="background-color: #343F71; color: #FBC40E; max-height: 250px; overflow-y: scroll;">
+                                    <form>
+                                        @foreach (var tag in ViewBag.AllMetaTags)
+                                        {
+                                                        <div class="form-check form-check-inline">
+                                                                    <input class="form-check-input" type="checkbox" name="metaTags" value="@tag.TagName" />
+                                                            <label class="form-check-label">@tag.TagName</label>
+                                                        </div>
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="selected-meta-tags" name="SelectedMetatags" value="" />
+   
+             <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+     </form>
+</div>
+
+
+
+<script>
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip({
+      placement: 'bottom',
+      container: '#meta-tags-container',
+      template: '<div class="tooltip tooltip-sm tooltip-right" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+  });
+});
+
+
+
+selectedMetaTags.push($(this).val());
+    else 
+    {
+        var index = selectedMetaTags.indexOf($(this).val());
+        if (index > -1) 
+        {
+             selectedMetaTags.splice(index, 1);
+         }
+    }
+    
+    $('#selectedMetaTags').val(JSON.stringify(selectedMetaTags));});});
+
+
+    $(document).ready(function () {
+    $('form').submit(function (e) {
+        e.preventDefault();
+
+        var selectedMetaTags = $('.meta-tag-checkbox:checked').map(function() {
+            return this.value;
+        }).get();
+
+        console.log(selectedMetaTags);
+
+        // send selectedMetaTags to the controller
+    });
+});
+</script>

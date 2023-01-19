@@ -1,0 +1,125 @@
+﻿@model SonOfBlogUpdater.Utils.PaginatedList<BlogPost>
+@*@model IEnumerable<SonOfBlogUpdater.Models.BlogPost>*@
+@{
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+'
+@*<div class="no-padding">*@
+ <div class="container">
+    @* Working on Levensheim search algorithm 
+     <div class="container">
+          <div class="card animated-card text-center" style="background-color: #FBC40E; color: #343F71;">
+            <div class="row d-flex justify-content-center m-2 p-2">
+              <div class="col-sm-6">
+                <form asp-action="Search" method="get">
+                  <div class="form-group row">
+                    <label for="metaTagSearch" class="col-sm-4 col-form-label text-center mb-4">Meta Tag Search:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="metaTag" placeholder="Search by meta tag..." class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="authorSearch" class="col-sm-4 col-form-label text-center mb-4">Author Search:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="author" placeholder="Search by author..." class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="bodySearch" class="col-sm-4 col-form-label text-center mb-4">Body Search:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="blogBody" placeholder="Search by blog post body..." class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="titleSearch" class="col-sm-4 col-form-label text-center mb-4">Title Search:</label>
+                    <div class="col-sm-8">
+                      <input type="text" name="titleSearch" placeholder="Search by Title..." class="form-control" />
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-12 d-flex justify-content-center">
+                      <input type="submit" value="Search" class="btn animated-button btn-primary" />
+                      <a asp-action="Index" class="btn animated-button btn-primary">Reset Search</a>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+      *@
+
+
+    <table class="table table-striped custom-table  custom-table-bordered  bg-dark">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Date</th>
+                <th>Body</th>
+             
+                <th class="meta-tags">Meta Tags</th>
+           
+                <th class="actions">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                    <tr>
+                        <td>@item.Title</td>
+                        <td>
+                        @foreach (var author in item.BlogPostAuthors)
+                        {
+                            @author.Author.Name;
+                        }
+                        </td>
+                        <td>@item.Date.ToString("yyyy-MM-dd")</td>
+                        <td>@item.Body</td>
+                       
+                                <td>
+                                    @foreach (var metaTag in item.BlogPostMetaTags)
+                                    {
+                                                     <span>@metaTag.MetaTag.TagName,</span>
+                                                <span> </span>
+                                    }
+                                </td>
+                    
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary animated-button">Edit</a>
+                       
+                                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger animated-button">Delete</a>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+    </table>
+
+
+</div>
+        <div class="p-3 m-3 d-flex justify-content-center">
+            @{
+                var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+                var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+            }
+
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-pageNumber="@(Model.PageIndex > 1 ? Model.PageIndex - 1 : 1)"
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn custom-button animated-button animated-button-default n @prevDisabled">
+                        Previous
+                    </a>
+                    <a asp-action="Index"
+                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                        asp-route-page="@(Model.PageIndex + 1)"
+                     
+
+                       asp-route-currentFilter="@ViewData["CurrentFilter"]"
+                       class="btn custom-button animated-button  animated-button-default  @nextDisabled">
+                        Next
+                    </a>
+                    <a asp-action="CreateNew" class="btn custom-button animated-button animated-button-success">Create New</a>
+        </div>

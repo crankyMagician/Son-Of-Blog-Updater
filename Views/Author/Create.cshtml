@@ -1,0 +1,45 @@
+﻿@model SonOfBlogUpdater.Models.Author
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container py-5">
+   <div class="card animated-card jumbotron text-center" style="background-color: #FBC40E; color: #343F71;">
+
+       <h4 class="text-center mb-4">Create New Author</h4>
+
+        
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-4">
+              <form method="post" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group  mx-auto">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input type="text" name="name" class="form-control bg-light text-dark" required/>
+                </div>
+                <div class="form-group  mx-auto">
+                    <label asp-for="Bio" class="control-label"></label>
+                    <textarea name="bio" class="form-control bg-light text-dark" required></textarea>
+                </div>
+               
+                <div class="form-group  mx-auto">
+                    <input type="submit" value="Create" class="btn btn-primary animated-button" onclick="console.log('Create button clicked')"/>
+                </div>
+            </form>
+
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index" class="btn btn-secondary animated-button">Back to List</a>
+        </div>
+
+    </div>
+
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

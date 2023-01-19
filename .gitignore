@@ -1,0 +1,9 @@
+bin/
+obj/
+packages/
+App_Data/
+App_Start/
+*.suo
+*.user
+*.vs
+web.config
